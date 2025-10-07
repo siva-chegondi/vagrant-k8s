@@ -1,0 +1,4 @@
+longhornUI:
+  replicas: 1
+persistence:
+  defaultClassReplicaCount: 2

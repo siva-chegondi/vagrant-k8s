@@ -1,0 +1,22 @@
+gatewayAPI:
+  enabled: true
+  enableAppProtocol: true # for GRPC ( HTTP/2 ) traffic
+  hostNetwork:
+    enabled: true
+
+envoy:
+  enabled: true
+  securityContext:
+    capabilities:
+      keepCapNetBindService: true
+      envoy:
+        - NET_BIND_SERVICE
+        - BPF
+        - NET_ADMIN
+
+kubeProxyReplacement: true
+k8sServiceHost: "auto"
+
+hubble:
+  enabled: true
+  port: 9965

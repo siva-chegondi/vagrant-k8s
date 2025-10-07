@@ -83,5 +83,13 @@ Vagrant.configure("2") do |config|
   # preparing node for the kubernetes
   config.vm.provision "shell", path: "../k8s_node.sh"
 
+  # VirtualBox NAT will add same ip to all VMs, causing network problems
+  # solution: Configuring kubelet with NODE IP.
+  # Kubelet systemd service will read overwrites from /etc/default/kubelet
+  config.vm.provision "shell", inline: <<-SCRIPT
+  sudo echo "KUBELET_EXTRA_ARGS='--node-ip=192.168.60.11'" > /etc/default/kubelet
+  sudo systemctl restart kubelet
+  SCRIPT
+
   config.vm.provision "shell", path: "master.sh"
 end

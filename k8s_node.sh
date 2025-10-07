@@ -24,6 +24,17 @@ sudo sysctl --system
 # Install the Container Runtime supporting CRI, containerd
 sudo apt-get install -y containerd
 
+### configure the containerd runtime to enable systemd cgroups
+### tell Containerd to use systemd cgroups
+
+# copy the default config
+sudo mkdir -p /etc/containerd/
+sudo touch /etc/containerd/config.toml
+sudo containerd config default | sudo tee /etc/containerd/config.toml # create with root prev
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
+sudo sed -i 's/pause:3.8/pause:3.10.1/g' /etc/containerd/config.toml
+sudo systemctl restart containerd
+
 # install key-rings to verify signature
 curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
@@ -36,8 +47,4 @@ sudo apt-get update
 sudo apt-get install -y kubelet kubeadm
 sudo apt-mark hold kubelet kubeadm
 
-# enabling the kubelet service before running kubeadm
 sudo systemctl enable --now kubelet
-
-sudo ufw allow 22
-sudo ufw --force enable
