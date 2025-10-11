@@ -1,0 +1,28 @@
+engines:
+  local:
+    lvm:
+      enabled: false
+    zfs:
+      enabled: false
+  replicated:
+    mayastor:
+      enabled: true
+loki:
+  enabled: false
+
+mayastor:
+  nodeSelector:
+    openebs.io/engine: mayastor
+  eventing:
+    enabled: false
+  etcd:
+    replicaCount: 2
+  loki-stack:
+    enabled: false
+  io_engine:
+    nodeSelector:
+      openebs.io/engine: mayastor
+
+helm.sh/images: |
+    - name: etcd
+      image: registry.k8s.io/etcd:3.6.4-0

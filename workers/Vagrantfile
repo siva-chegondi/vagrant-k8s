@@ -103,8 +103,8 @@ Vagrant.configure("2") do |config|
         SCRIPT
 
         # configure the node for openebs storage
-        # TODO: uncomment following line for openebs storage
-        # node.vm.provision "shell", path: "openebs-node.sh"
+        # uncomment following line for openebs storage
+        node.vm.provision "shell", path: "openebs-node.sh"
 
         # run kubeadm to join the cluster
         node.vm.provision "shell", path: "worker.sh"
