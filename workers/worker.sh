@@ -2,9 +2,17 @@
 
 # formatting the storage disk to ext4
 # and mounting it to /data path
-sudo mkfs.ext4 /dev/sdb
-sudo mkdir -p /data
-sudo mount /dev/sdb /data
+if [ -b /dev/sdb ] && ! blkid /dev/sdb; then
+  # if /dev/sdb is not mounted ( not a boot disk )
+  sudo mkfs.ext4 /dev/sdb
+  sudo mkdir -p /data
+  sudo mount /dev/sdb /data
+else
+  # if /dev/sdb is mounted ( boot disk )
+  sudo mkfs.ext4 /dev/sda
+  sudo mkdir -p /data
+  sudo mount /dev/sda /data
+fi
 
 # required on worker nodes for longhorn
 sudo systemctl enable iscsid

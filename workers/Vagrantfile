@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
         # config.vm.box_check_update = false
 
         # Configuring disk to utilize for stateful sets
-        node.vm.disk :disk, name: "worker-disk-#{i}", size: "5GB"
+        node.vm.disk :disk, name: "worker-disk-#{i}", size: "10GB"
 
         # configuring vbguest additions
         node.vbguest.auto_update = false
@@ -101,6 +101,10 @@ Vagrant.configure("2") do |config|
         sudo echo "KUBELET_EXTRA_ARGS='--node-ip=192.168.60.2#{i}'" > /etc/default/kubelet
         sudo systemctl restart kubelet
         SCRIPT
+
+        # configure the node for openebs storage
+        # TODO: uncomment following line for openebs storage
+        # node.vm.provision "shell", path: "openebs-node.sh"
 
         # run kubeadm to join the cluster
         node.vm.provision "shell", path: "worker.sh"

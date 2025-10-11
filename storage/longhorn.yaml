@@ -2,3 +2,5 @@ longhornUI:
   replicas: 1
 persistence:
   defaultClassReplicaCount: 2
+defaultSettings:
+  defaultDataPath: /data
