@@ -1,6 +1,18 @@
+csi:
+  # -- Replica count of the CSI Attacher. When unspecified, Longhorn uses the default value ("3").
+  attacherReplicaCount: "1"
+  # -- Replica count of the CSI Provisioner. When unspecified, Longhorn uses the default value ("3").
+  provisionerReplicaCount: "1"
+  # -- Replica count of the CSI Resizer. When unspecified, Longhorn uses the default value ("3").
+  resizerReplicaCount: "1"
+  # -- Replica count of the CSI Snapshotter. When unspecified, Longhorn uses the default value ("3").
+  snapshotterReplicaCount: "1"
 longhornUI:
   replicas: 1
 persistence:
   defaultClassReplicaCount: 2
 defaultSettings:
   defaultDataPath: /data
+  # -- Percentage of minimum available disk capacity. When the minimum available capacity exceeds the total available capacity,
+  # the disk becomes unschedulable until more space is made available for use. The default value is "25".
+  storageMinimalAvailablePercentage: "10"

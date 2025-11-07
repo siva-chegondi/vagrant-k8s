@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
         # config.vm.box_check_update = false
 
         # Configuring disk to utilize for stateful sets
-        node.vm.disk :disk, name: "worker-disk-#{i}", size: "10GB"
+        node.vm.disk :disk, name: "worker-disk-#{i}", size: "30GB"
 
         # configuring vbguest additions
         node.vbguest.auto_update = false
@@ -79,7 +79,7 @@ Vagrant.configure("2") do |config|
             vb.name = "worker-#{i}"
 
             # Customize the amount of memory on the VM:
-            vb.memory = "2048"
+            vb.memory = "4096"
             vb.cpus = 2
         end
 

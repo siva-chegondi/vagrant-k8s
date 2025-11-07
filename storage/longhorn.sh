@@ -12,3 +12,6 @@ helm repo update
 
 # installing the longhorn under the longhorn-system namespace
 helm upgrade --install longhorn longhorn/longhorn --namespace longhorn-system --create-namespace --version 1.10.0 -f $(dirname $0)/longhorn.yaml
+
+# making longhorn as default storage class if longhorn is not default storage class
+# kubectl patch storageclass longhorn -p '{"metadata":{"annotations":{"storageclass.kube']lrnetes.io/is-default-class":"true"}}}'
