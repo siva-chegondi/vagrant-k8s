@@ -33,6 +33,19 @@ sudo touch /etc/containerd/config.toml
 sudo containerd config default | sudo tee /etc/containerd/config.toml # create with root prev
 sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/g' /etc/containerd/config.toml
 sudo sed -i 's/pause:3.8/pause:3.10.1/g' /etc/containerd/config.toml
+
+# configure the containerd to update registry config_path
+# search for the line match and replace next line (config_path = "")
+sudo sed -i '/[plugins."io.containerd.grpc.v1.cri".registry]/{N;s/config_path = ""/config_path = "\/etc\/containerd\/certs.d"/}' /etc/containerd/config.toml
+
+# configure the custom ( nexus ) registry to pull the images running on host machine
+sudo mkdir -p /etc/containerd/certs.d/192.168.60.1:8081/
+sudo tee /etc/containerd/certs.d/192.168.60.1:8081/hosts.toml <<EOF
+server = "https://192.168.60.1:8081"
+[host."http://192.168.60.1:8081"]
+  capabilities = ["pull", "resolve"]
+  skip_verify = true
+EOF
 sudo systemctl restart containerd
 
 # install key-rings to verify signature

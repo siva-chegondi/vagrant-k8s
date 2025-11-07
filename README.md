@@ -6,6 +6,8 @@ This repository provisions a local, multi‑VM Kubernetes cluster using Vagrant 
 
 Provisioning uses kubeadm with containerd as the container runtime. A shared folder is used to pass the cluster join command and kubeconfig from the master to the host and workers. Optional Helm values are provided to deploy Cilium as the CNI.
 
+**Note: This branch uses nexus registry running on the host machine for docker images cache and apt-get cache.**
+
 ## Stack / Technologies
 - Vagrant (Vagrantfile based environment)
 - VirtualBox provider
