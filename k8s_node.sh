@@ -5,6 +5,17 @@
 # for kubernetes cluster
 ###### =================== #####
 
+# Configure the node to use nexus proxy
+# proxying URI http://ports.ubuntu.com/ubuntu-ports/
+# for suites noble, noble-updates, noble-backports, noble-security
+sudo tee /etc/apt/sources.list.d/ubuntu.sources <<EOF
+Types: deb
+URIs: http://192.168.60.1:8081/repository/apt/
+Suites: noble noble-updates noble-backports noble-security
+Components: main restricted universe multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+EOF
+
 # update machine
 sudo apt-get update -y
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
